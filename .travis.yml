@@ -11,7 +11,7 @@ script:
 - >
   if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-    TAG=$(grep "ARG NSD_VERSION" Dockerfile | awk 'NF>1{print $NF}')
+    TAG=$(grep "ARG NSD_VERSION" Dockerfile | awk -F "=" 'NF>1{print $NF}')
     docker tag offtechnologies/docker-arm32v6-nsd offtechnologies/docker-arm32v6-nsd:$TAG
     docker push offtechnologies/docker-arm32v6-nsd:$TAG
     docker push offtechnologies/docker-arm32v6-nsd:latest
